@@ -17,9 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from biblioteca.views import search_book, register_book, delete_book
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('search/', search_book, name='search_book'),
     path('register/', register_book, name='register_book'),
     path('delete/<int:book_id>/', delete_book, name='delete_book'),

@@ -1,5 +1,6 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from .models import Book
 from django.db.models import Q
 from .serializers import BookSerializer
@@ -7,6 +8,7 @@ import requests
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def search_book(request):
     query = request.GET.get('query')
     print("Este es el query que estoy buscando")
@@ -48,6 +50,7 @@ def search_book(request):
 
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def register_book(request):
     serializer = BookSerializer(data=request.data)
 
@@ -64,6 +67,7 @@ def register_book(request):
 
 
 @api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
 def delete_book(request, book_id):
     try:
         # Eliminar el libro de la base de datos interna
